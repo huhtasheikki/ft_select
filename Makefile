@@ -6,14 +6,16 @@
 #    By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/24 16:18:57 by hhuhtane          #+#    #+#              #
-#    Updated: 2021/02/15 15:16:21 by hhuhtane         ###   ########.fr        #
+#    Updated: 2021/02/23 16:45:35 by hhuhtane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-NAME = minishell
+NAME = ft_select
 
-_SRC = main.c
+_SRC = ft_select.c \
+		errors.c \
+		args_to_lst.c
 
 _OBJ = $(_SRC:.c=.o)
 _INC = ft_select.h
@@ -31,7 +33,8 @@ LIBFT = $(patsubst %,$(LIBFT_DIR)/%,$(_LIBFT))
 
 INC_LIBFT = -I libft/includes
 
-FLAGS = -Wall -Wextra -Werror -ltermcap -I $(INC_DIR) $(INC_LIBFT)
+TERMCAPS = -ltermcap
+FLAGS = -Wall -Wextra -Werror -I $(INC_DIR) $(INC_LIBFT)
 
 COLOR_RESET = \033[0m
 COLOR_WAIT = \033[0;31m
