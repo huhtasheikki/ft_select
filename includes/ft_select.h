@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/28 16:59:08 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 08:56:47 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@
 # define ERR_TERMCAPS_NO_ACCESS 32
 # define ERR_SIG 64
 
+/*
 extern char					PC;
 extern char					*UP;
 extern char					*BC;
 extern short				ospeed;
+*/
 
 struct						s_select
 {
@@ -55,13 +57,17 @@ struct						s_program
 	char					*cl_string;
 	char					*cm_string;
 	char					*cd_string;
+	char					*so_string;
+	char					*se_string;
+	char					*mr_string;
+	char					*me_string;
 	int						height;
 	int						width;
 	int						auto_wrap;
 //	char					pc;
 //	char					*bc;
 //	char					*up;
-	int						arglen;
+	size_t					arglen;
 	int						col_num;
 	int						cur_x;
 	int						cur_y;
@@ -82,7 +88,7 @@ t_list						*args_to_lst(char **argv, t_prog *prog);
 t_list						*args_to_lst2(char **argv, t_prog *prog);
 void						disable_raw_mode(t_prog *prog);
 
-void						init_terminal_data(t_prog *prog);
+void						init_terminal_data(t_prog *prog, char *tbuf);
 void						interrogate_terminal(t_prog *prog);
 
 void						sig_ttysize(int signo);
@@ -97,5 +103,7 @@ void						move_cursor_up(t_prog *prog);
 void						move_cursor_down(t_prog *prog);
 void						move_cursor_left(t_prog *prog);
 void						move_cursor_right(t_prog *prog);
+
+int							ft_putc(int c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/28 16:46:35 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 07:57:08 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,22 @@ static t_select		arg_to_select(char *arg)
 
 t_list	*args_to_lst2(char **argv, t_prog *prog)
 {
-//	t_select	select;
+	t_select	select;
 	t_list		*ptr;
-//	t_list		*new;
+	t_list		*new;
 	int			x;
 	int			y;
 
 	x = 0;
 	y = 0;
 	ptr = NULL;
-	ft_putendl("RORO1");
-//	if (!(prog->argv_l = ft_lstnew(NULL, 0)))
-	if (!(ptr = ft_lstnew(NULL, 0)))
-		ft_putendl("roro1.2");
-//		err_fatal(ERR_MALLOC, NULL, prog);
-	ft_putendl("RORO22");
-//	ptr = prog->argv_l;
-	(void)argv;
-	(void)prog;
-//	ft_bzero(&select, sizeof(t_select));
-
-/*
+	if (!(prog->argv_l = ft_lstnew(NULL, 0)))
+		err_fatal(ERR_MALLOC, NULL, prog);
+//	if (!(ptr = ft_lstnew(NULL, 0)))
+//		ft_putendl("roro1.2");
+	ptr = prog->argv_l;
+	ft_bzero(&select, sizeof(t_select));
+	select.cursor = 1;
 	while (*argv)
 	{
 
@@ -71,7 +66,8 @@ t_list	*args_to_lst2(char **argv, t_prog *prog)
 		select.x = x;
 		select.y = y;
 		select.select = 0;
-		select.cursor = 0;
+		if ((ft_strlen(*argv)) > prog->arglen)
+			prog->arglen = ft_strlen(*argv);
 
 		new = ft_lstnew(&select, sizeof(t_select));
 		ptr->next = new;
@@ -85,10 +81,11 @@ t_list	*args_to_lst2(char **argv, t_prog *prog)
 			x = 0;
 			y++;
 		}
+		select.cursor = 0;
 	}
-*/
-	return (ptr);
-//	return (prog->argv_l);
+
+//	return (ptr);
+	return (prog->argv_l);
 }
 
 t_list	*args_to_lst(char **argv, t_prog *prog)

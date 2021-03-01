@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/28 16:57:29 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 08:56:59 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ void	move_cursor(t_prog *prog)
 void	interrogate_terminal(t_prog *prog)
 {
 	char	*buffer;
-	char	*temp;
+//	char	*temp;
 
 //	if (!(buffer = ft_memalloc(sizeof(char) * ft_strlen(prog->term_buffer))))
-	if (!(buffer = ft_memalloc(sizeof(char) * ft_strlen(prog->termtype))))
+//	if (!(buffer = ft_memalloc(sizeof(char) * ft_strlen(prog->termtype))))
+	if (!(buffer = ft_memalloc(sizeof(char) * 2048)))
 		err_fatal(ERR_MALLOC, NULL, prog);
 //	prog->buffer = buffer;
   /* Extract information we will use.  */
@@ -57,19 +58,31 @@ void	interrogate_terminal(t_prog *prog)
 	prog->height = tgetnum ("li");
 	prog->width = tgetnum ("co");
 
+	prog->so_string = tgetstr("so", &buffer);
+	prog->se_string = tgetstr("se", &buffer);
+	prog->mr_string = tgetstr("mr", &buffer);
+	prog->me_string = tgetstr("me", &buffer);
   /* Extract information that termcap functions use.  */
+
+/*
 	temp = tgetstr ("pc", &buffer);
 	PC = temp ? *temp : 0;
 	BC = tgetstr ("le", &buffer);
 	UP = tgetstr ("up", &buffer);
+*/
 }
 
-void	init_terminal_data(t_prog *prog)
+void	init_terminal_data(t_prog *prog, char *tbuf)
 {
 	int		success;
+//	char	*term_buffer;
 
+	(void)tbuf;
+//	term_buffer = tbuf;
+//	prog->term_buffer = tbuf;
 //	ft_bzero(prog, sizeof(t_prog));
 //	ft_bzero(prog->term_buffer, 2048);
+//	prog->term_buffer = NULL;
 	prog->termtype = getenv("TERM");
 	if (!prog->termtype)
 		err_quit(ERR_TERMTYPE_NOT_SET, NULL);

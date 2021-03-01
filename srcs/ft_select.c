@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 07:07:07 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 08:58:51 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	enable_raw_mode(t_prog *prog)
 void	print_lst(t_list *elem, t_prog *prog)
 {
 	int		i;
-//	t_select	*sel;
+	t_select	*sel;
 
 	i = 0;
 	ft_printf("PRINTLIST>\n\r");
@@ -103,13 +103,23 @@ void	print_lst(t_list *elem, t_prog *prog)
 	{
 		i++;
 		elem = elem->next;
-//		sel = elem->content;
-		ft_printf("%-*s", prog->arglen + 1, elem->content);
+		sel = elem->content;
+//		ft_printf("%-*s", prog->arglen + 1, elem->content);
+		if (sel->cursor)
+		{
+			tputs(prog->mr_string, 1, ft_putc);
+			ft_printf("%-*s", prog->arglen, sel->p_argv);
+			tputs(prog->me_string, 1, ft_putc);
+		}
+		else
+			ft_printf("%-*s", prog->arglen + 1, sel->p_argv);
 		if (i == prog->col_num)
 		{
 			i = 0;
 			ft_printf("\r\n");
 		}
+		else
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	ft_printf("\r\n");
 }
@@ -133,6 +143,7 @@ int		get_longest_len(char **argv)
 int		main(int argc, char **argv)
 {
 	t_prog		prog;
+	char		term_buffer[2048];
 //	t_list		*select;
 	char		c;
 
@@ -144,32 +155,18 @@ int		main(int argc, char **argv)
 	ft_bzero(&prog, sizeof(t_prog));
 //	prog.term_buffer = ft_memalloc(sizeof(char) * 2048);
 
-//	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
-	ft_putendl("HERE");
-	ft_bzero(&prog, sizeof(t_prog));
-	ft_putendl("HERE2");
-	init_terminal_data(&prog);
-	ft_putendl("HERE3");
+	init_terminal_data(&prog, term_buffer);
 	interrogate_terminal(&prog);
-	ft_putendl("HERE4");
-	prog.arglen = get_longest_len(argv + 1);
-	ft_putendl("HERE5");
+//	prog.arglen = get_longest_len(argv + 1);
 	prog.col_num = prog.width / (prog.arglen + 1);
-	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
-	ft_putendl("HERE6x");
-//	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
-//	ft_printf("prog: %p\n\r", argv);
-	ft_putendl("HERE7");
 	args_to_lst2(argv + 1, &prog);
-	ft_putendl("HERE7");
 	enable_raw_mode(&prog);
 //	select = args_to_lst(argv + 1, &prog);
-	ft_putendl("HERE8");
 	terminal_clear(&prog);
 
 //	ft_printf("kolumnien maara:%d, koko:%d\r\n", prog.col_num, prog.arglen);
 
-//	print_lst(select, &prog);
+	print_lst(prog.argv_l, &prog);
 
 //	ft_printf("height:%d widht:%d autowrap:%d \n\r", prog.height, prog.width, prog.auto_wrap);
 
