@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 11:43:32 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 19:39:22 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,11 @@ void	print_lst(t_list *elem, t_prog *prog)
 	t_select	*sel;
 
 	i = 0;
-	ft_printf("PRINTLIST>\n\r");
 	while (elem->next)
 	{
 		i++;
 		elem = elem->next;
 		sel = elem->content;
-//		ft_printf("%-*s", prog->arglen + 1, elem->content);
 		if (sel->select)
 			tputs(prog->mr_string, 1, ft_putc);
 		if (sel->cursor)
@@ -120,7 +118,6 @@ void	print_lst(t_list *elem, t_prog *prog)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	ft_printf("\r\n");
-	ft_printf_fd(STDOUT_FILENO, "col_num:%d\n\r", prog->col_num);
 }
 
 int		get_longest_len(char **argv)
@@ -196,13 +193,19 @@ int		main(int argc, char **argv)
 		if (c == 'l')
 			terminal_clear_row(&prog);
 		if (c == 'w')
-			move_cursor_up(&prog);
+			fun_move_cursor(0, MOVE_UP, &prog);
+//			move_cursor_up(&prog);
 		if (c == 's')
-			move_cursor_down(&prog);
+			fun_move_cursor(0, MOVE_DOWN, &prog);
+//			move_cursor_down(&prog);
 		if (c == 'a')
-			move_cursor_left(&prog);
+			fun_move_cursor(MOVE_LEFT, 0, &prog);
+//			move_cursor_left(&prog);
 		if (c == 'd')
-			move_cursor_right(&prog);
+			fun_move_cursor(MOVE_RIGHT, 0, &prog);
+//			move_cursor_right(&prog);
+		if (c == ' ')
+			fun_select_cursor(&prog);
 	}
 
 	disable_raw_mode(&prog);

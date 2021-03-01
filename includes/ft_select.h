@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 11:20:01 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 19:03:23 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define ERR_TERMTYPE_NOT_FOUND 16
 # define ERR_TERMCAPS_NO_ACCESS 32
 # define ERR_SIG 64
+
+# define MOVE_UP -1
+# define MOVE_DOWN 1
+# define MOVE_LEFT -1
+# define MOVE_RIGHT 1
 
 /*
 extern char					PC;
@@ -110,6 +115,11 @@ void						move_cursor_left(t_prog *prog);
 void						move_cursor_right(t_prog *prog);
 
 int							ft_putc(int c);
+void						print_args(t_prog *prog);
+void						fun_move_cursor(int x, int y, t_prog *prog);
+void						fun_select_cursor(t_prog *prog);
+int							get_last_row_with_column_x(int x, t_list *lst);
+int							get_last_column_with_row_y(int y, t_list *lst);
 
 t_select					*get_cursor(t_list *lst);
 t_select					*get_xy_select(int x, int y, t_list *select);
