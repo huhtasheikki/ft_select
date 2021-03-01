@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 08:56:59 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:03:43 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	terminal_clear_row(t_prog *prog)
 	tputs(prog->cd_string, 1, ft_putc);
 }
 
-void	move_cursor(t_prog *prog)
+void	move_cursor(int x, int y, t_prog *prog)
 {
-	tputs(tgoto(prog->cm_string, prog->cur_x, prog->cur_y), 1, ft_putc);
+	tputs(tgoto(prog->cm_string, x, y), 1, ft_putc);
 }
 
 void	interrogate_terminal(t_prog *prog)
@@ -62,6 +62,8 @@ void	interrogate_terminal(t_prog *prog)
 	prog->se_string = tgetstr("se", &buffer);
 	prog->mr_string = tgetstr("mr", &buffer);
 	prog->me_string = tgetstr("me", &buffer);
+	prog->us_string = tgetstr("us", &buffer);
+	prog->ue_string = tgetstr("ue", &buffer);
   /* Extract information that termcap functions use.  */
 
 /*
@@ -72,17 +74,10 @@ void	interrogate_terminal(t_prog *prog)
 */
 }
 
-void	init_terminal_data(t_prog *prog, char *tbuf)
+void	init_terminal_data(t_prog *prog)
 {
 	int		success;
-//	char	*term_buffer;
 
-	(void)tbuf;
-//	term_buffer = tbuf;
-//	prog->term_buffer = tbuf;
-//	ft_bzero(prog, sizeof(t_prog));
-//	ft_bzero(prog->term_buffer, 2048);
-//	prog->term_buffer = NULL;
 	prog->termtype = getenv("TERM");
 	if (!prog->termtype)
 		err_quit(ERR_TERMTYPE_NOT_SET, NULL);

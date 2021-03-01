@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 07:57:08 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:39:22 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*args_to_lst2(char **argv, t_prog *prog)
 		ptr = ptr->next;
 		ptr->next = NULL;
 		argv++;
-		if (x < prog->col_num)
+		if (x < prog->col_num - 1)
 			x++;
 		else
 		{
@@ -83,7 +83,7 @@ t_list	*args_to_lst2(char **argv, t_prog *prog)
 		}
 		select.cursor = 0;
 	}
-
+	prog->row_num = y;
 //	return (ptr);
 	return (prog->argv_l);
 }

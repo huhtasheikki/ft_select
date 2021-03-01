@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 08:58:51 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:43:32 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,12 @@ void	print_lst(t_list *elem, t_prog *prog)
 		elem = elem->next;
 		sel = elem->content;
 //		ft_printf("%-*s", prog->arglen + 1, elem->content);
-		if (sel->cursor)
-		{
+		if (sel->select)
 			tputs(prog->mr_string, 1, ft_putc);
-			ft_printf("%-*s", prog->arglen, sel->p_argv);
-			tputs(prog->me_string, 1, ft_putc);
-		}
-		else
-			ft_printf("%-*s", prog->arglen + 1, sel->p_argv);
+		if (sel->cursor)
+			tputs(prog->us_string, 1, ft_putc);
+		ft_printf("%-*s", prog->arglen, sel->p_argv);
+		tputs(prog->me_string, 1, ft_putc);
 		if (i == prog->col_num)
 		{
 			i = 0;
@@ -122,6 +120,7 @@ void	print_lst(t_list *elem, t_prog *prog)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	ft_printf("\r\n");
+	ft_printf_fd(STDOUT_FILENO, "col_num:%d\n\r", prog->col_num);
 }
 
 int		get_longest_len(char **argv)
@@ -143,7 +142,6 @@ int		get_longest_len(char **argv)
 int		main(int argc, char **argv)
 {
 	t_prog		prog;
-	char		term_buffer[2048];
 //	t_list		*select;
 	char		c;
 
@@ -155,9 +153,9 @@ int		main(int argc, char **argv)
 	ft_bzero(&prog, sizeof(t_prog));
 //	prog.term_buffer = ft_memalloc(sizeof(char) * 2048);
 
-	init_terminal_data(&prog, term_buffer);
+	init_terminal_data(&prog);
 	interrogate_terminal(&prog);
-//	prog.arglen = get_longest_len(argv + 1);
+	prog.arglen = get_longest_len(argv + 1);
 	prog.col_num = prog.width / (prog.arglen + 1);
 	args_to_lst2(argv + 1, &prog);
 	enable_raw_mode(&prog);
