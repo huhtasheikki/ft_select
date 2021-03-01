@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 19:39:22 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 20:09:10 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int		main(int argc, char **argv)
 	if (signal(SIGWINCH, sig_ttysize) == SIG_ERR)
 		err_fatal(ERR_SIG, NULL, NULL);
 	ft_bzero(&prog, sizeof(t_prog));
+	g_prog = &prog;
 //	prog.term_buffer = ft_memalloc(sizeof(char) * 2048);
 
 	init_terminal_data(&prog);

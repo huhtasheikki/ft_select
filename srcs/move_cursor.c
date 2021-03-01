@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:51:58 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 19:36:33 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 19:59:51 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,29 @@ void	fun_move_cursor(int x, int y, t_prog *prog)
 	print_args(prog);
 }
 
+void	fun_move_cursor_next(t_prog *prog)
+{
+	t_list		*lst;
+	t_select	*current;
+
+	lst = prog->argv_l;
+	while (lst->next)
+	{
+		lst = lst->next;
+		current = lst->content;
+		if (current->cursor)
+		{
+			current->cursor = 0;
+			if (lst->next)
+				current = lst->next->content;
+			else
+				current = prog->argv_l->next->content;
+			current->cursor = 1;
+			return ;
+		}
+	}
+}
+
 void	fun_select_cursor(t_prog *prog)
 {
 	t_select	*current;
@@ -51,6 +74,7 @@ void	fun_select_cursor(t_prog *prog)
 		current->select = 0;
 	else
 		current->select = 1;
+	fun_move_cursor_next(prog);
 	print_args(prog);
 }
 

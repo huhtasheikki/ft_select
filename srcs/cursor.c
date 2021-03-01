@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 10:14:24 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 19:05:07 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 19:41:28 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int			get_last_row_with_column_x(int x, t_list *lst)
 	int			y;
 
 	y = 0;
-//	last = get_xy_select(x, 0, lst);
 	while (lst->next)
 	{
 		lst = lst->next;
@@ -49,7 +48,6 @@ int			get_last_column_with_row_y(int y, t_list *lst)
 	int			x;
 
 	x = 0;
-//	last = get_xy_select(x, 0, lst);
 	while (lst->next)
 	{
 		lst = lst->next;

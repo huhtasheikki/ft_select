@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 19:03:23 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 20:18:55 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ extern char					*UP;
 extern char					*BC;
 extern short				ospeed;
 */
+
 
 struct						s_select
 {
@@ -84,6 +85,11 @@ struct						s_program
 typedef struct s_select		t_select;
 typedef struct s_program	t_prog;
 
+/*
+** GLOBALS:
+*/
+t_prog						*g_prog;
+
 void						err_fatal(int error_no, char *s_str, t_prog *prog);
 void						err_quit(int error_no, char *s_str);
 
@@ -117,6 +123,7 @@ void						move_cursor_right(t_prog *prog);
 int							ft_putc(int c);
 void						print_args(t_prog *prog);
 void						fun_move_cursor(int x, int y, t_prog *prog);
+void						fun_move_cursor_next(t_prog *prog);
 void						fun_select_cursor(t_prog *prog);
 int							get_last_row_with_column_x(int x, t_list *lst);
 int							get_last_column_with_row_y(int y, t_list *lst);

@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 18:26:35 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/26 18:48:28 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 20:22:58 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,10 @@ void	sig_ttysize(int signo)
 
 	(void)signo;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
-	ft_printf("Rows: %d, Columns: %d\n\r", ws.ws_row, ws.ws_col);
+	g_prog->height = ws.ws_row;
+	g_prog->width = ws.ws_col;
+	g_prog->row_num = ws.ws_row;
+	g_prog->col_num = ws.ws_col / (g_prog->arglen + 1);
+	print_args(g_prog);
+//	ft_printf("Rows: %d, Columns: %d\n\r", ws.ws_row, ws.ws_col);
 }
