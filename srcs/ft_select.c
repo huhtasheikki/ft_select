@@ -6,18 +6,15 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/23 21:33:18 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 07:07:07 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-#include <ctype.h> // remove (iscntrl)
-#include <stdio.h> // remove (printf)
-
 int		ft_iscntrl(int c)
 {
-	if (c < 32 || c == 127)
+	if ((c > 0 && c < 32) || c == 127)
 		return (1);
 	return (0);
 }
@@ -27,7 +24,9 @@ void	disable_raw_mode(t_prog *prog)
 	t_termios	orig_termios;
 
 	orig_termios = prog->orig_termios;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
+		exit(1);
+//		err_fatal(ERR_MESSAGE, "tcsetattr", prog);
 }
 
 void	ft_cfmakeraw(t_termios *termios_p)
@@ -83,40 +82,133 @@ void	enable_raw_mode(t_prog *prog)
 {
 	t_termios	raw;
 
-	tcgetattr(STDIN_FILENO, &raw);
+	if (tcgetattr(STDIN_FILENO, &raw) == -1)
+		err_fatal(ERR_MESSAGE, "tcgetattr", prog);
 	prog->orig_termios = raw;
-//	raw.c_iflag &= ~(ICRNL | IXON);
-//	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 	ft_cfmakeraw(&raw);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	raw.c_cc[VMIN] = 0;
+	raw.c_cc[VTIME] = 1;
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+		err_fatal(ERR_MESSAGE, "tcsetattr", prog);
+}
+
+void	print_lst(t_list *elem, t_prog *prog)
+{
+	int		i;
+//	t_select	*sel;
+
+	i = 0;
+	ft_printf("PRINTLIST>\n\r");
+	while (elem->next)
+	{
+		i++;
+		elem = elem->next;
+//		sel = elem->content;
+		ft_printf("%-*s", prog->arglen + 1, elem->content);
+		if (i == prog->col_num)
+		{
+			i = 0;
+			ft_printf("\r\n");
+		}
+	}
+	ft_printf("\r\n");
+}
+
+int		get_longest_len(char **argv)
+{
+	int		len;
+	int		temp;
+
+	len = 0;
+	while (*argv)
+	{
+		temp = ft_strlen(*argv);
+		if (temp > len)
+			len = temp;
+		argv++;
+	}
+	return (len);
 }
 
 int		main(int argc, char **argv)
 {
 	t_prog		prog;
-	t_list		*select;
+//	t_list		*select;
 	char		c;
 
 	if (argc < 2)
 		exit(ft_printf("USAGE HOMMAT\n"));
-	enable_raw_mode(&prog);
-	select = args_to_lst(argv, &prog);
 
+	if (signal(SIGWINCH, sig_ttysize) == SIG_ERR)
+		err_fatal(ERR_SIG, NULL, NULL);
+	ft_bzero(&prog, sizeof(t_prog));
+//	prog.term_buffer = ft_memalloc(sizeof(char) * 2048);
+
+//	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
+	ft_putendl("HERE");
+	ft_bzero(&prog, sizeof(t_prog));
+	ft_putendl("HERE2");
+	init_terminal_data(&prog);
+	ft_putendl("HERE3");
+	interrogate_terminal(&prog);
+	ft_putendl("HERE4");
+	prog.arglen = get_longest_len(argv + 1);
+	ft_putendl("HERE5");
+	prog.col_num = prog.width / (prog.arglen + 1);
+	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
+	ft_putendl("HERE6x");
+//	ft_printf_fd(STDOUT_FILENO, "prog: %p\n\r", prog);
+//	ft_printf("prog: %p\n\r", argv);
+	ft_putendl("HERE7");
+	args_to_lst2(argv + 1, &prog);
+	ft_putendl("HERE7");
+	enable_raw_mode(&prog);
+//	select = args_to_lst(argv + 1, &prog);
+	ft_putendl("HERE8");
+	terminal_clear(&prog);
+
+//	ft_printf("kolumnien maara:%d, koko:%d\r\n", prog.col_num, prog.arglen);
+
+//	print_lst(select, &prog);
+
+//	ft_printf("height:%d widht:%d autowrap:%d \n\r", prog.height, prog.width, prog.auto_wrap);
+
+/*
 	int i;
-    printf("The ASCII value of all control characters are ");
+    ft_printf("The ASCII value of all control characters are ");
     for (i=0; i<=127; ++i)
     {
-        if (iscntrl(i)!=0)
-            printf("%d ", i);
+        if (ft_iscntrl(i) != 0)
+            ft_printf("%d ", i);
     }
+	ft_putchar('\n');
+	ft_putchar('\r');
+*/
 
-  while (read(STDIN_FILENO, &c, 1) == 1 && c != 'q') {
-    if (ft_iscntrl(c)) {
-      printf("%d\r\n", c);
-    } else {
-      printf("%d ('%c')\r\n", c, c);
-    }
-  }
+	while (1)
+	{
+		c = '\0';
+		if (read(STDIN_FILENO, &c, 1) == -1)
+			err_fatal(ERR_READ, NULL, &prog);
+/*
+		if (ft_iscntrl(c))
+			ft_printf("%d\r\n", c);
+		else if (c)
+			ft_printf("%d ('%c')\r\n", c, c);
+*/
+		if (c == 'q')
+			break;
+		if (c == 'l')
+			terminal_clear_row(&prog);
+		if (c == 'w')
+			move_cursor_up(&prog);
+		if (c == 's')
+			move_cursor_down(&prog);
+		if (c == 'a')
+			move_cursor_left(&prog);
+		if (c == 'd')
+			move_cursor_right(&prog);
+	}
 
 	disable_raw_mode(&prog);
 	return (0);

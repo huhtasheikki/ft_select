@@ -6,7 +6,7 @@
 #    By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/24 16:18:57 by hhuhtane          #+#    #+#              #
-#    Updated: 2021/02/23 16:45:35 by hhuhtane         ###   ########.fr        #
+#    Updated: 2021/03/01 07:21:47 by hhuhtane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ NAME = ft_select
 
 _SRC = ft_select.c \
 		errors.c \
-		args_to_lst.c
+		args_to_lst.c \
+		terminal.c \
+		signal.c \
+		move_cursor.c
 
 _OBJ = $(_SRC:.c=.o)
 _INC = ft_select.h
@@ -48,7 +51,7 @@ $(NAME): $(OBJ)
 	@make -C $(LIBFT_DIR)
 	@echo "FT_SELECT:\t[$(COLOR_TITLE)$(NAME) $(COLOR_OK)READY \
 	$(COLOR_RESET)]"
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(TERMCAPS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	@echo "FT_SELECT:\t[$(COLOR_TITLE)$@ $(COLOR_OK) made$(COLOR_RESET)]"
