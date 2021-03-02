@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 21:07:10 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:58:31 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,12 +187,12 @@ int		main(int argc, char **argv)
 		c = '\0';
 		if (read(STDIN_FILENO, &c, 1) == -1)
 			err_fatal(ERR_READ, NULL, &prog);
-/*
+
 		if (ft_iscntrl(c))
 			ft_printf("%d\r\n", c);
 		else if (c)
 			ft_printf("%d ('%c')\r\n", c, c);
-*/
+
 		if (c == 'q')
 			break;
 		if (c == 'l')
@@ -211,6 +211,8 @@ int		main(int argc, char **argv)
 //			move_cursor_right(&prog);
 		if (c == ' ')
 			fun_select_cursor(&prog);
+		if (c == 127)
+			remove_elem(&prog);
 	}
 
 	disable_raw_mode(&prog);

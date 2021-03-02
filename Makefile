@@ -6,7 +6,7 @@
 #    By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/24 16:18:57 by hhuhtane          #+#    #+#              #
-#    Updated: 2021/03/01 10:41:56 by hhuhtane         ###   ########.fr        #
+#    Updated: 2021/03/02 10:32:56 by hhuhtane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ _SRC = ft_select.c \
 		terminal.c \
 		signal.c \
 		move_cursor.c \
-		cursor.c
+		cursor.c \
+		remove_elem.c \
+		quit.c
 
 _OBJ = $(_SRC:.c=.o)
 _INC = ft_select.h

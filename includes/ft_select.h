@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 09:27:44 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 10:32:43 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ extern short				ospeed;
 struct						s_select
 {
 	char					*p_argv;
-	char					*str;
 	int						x;
 	int						y;
 	bool					select;
@@ -125,5 +124,8 @@ int							get_last_column_with_row_y(int y, t_list *lst);
 t_select					*get_cursor(t_list *lst);
 t_select					*get_xy_select(int x, int y, t_list *select);
 void						set_xy_to_argvl(t_list *lst, int col_num);
+void						remove_elem(t_prog *prog);
+
+void						quit_no_return(t_prog *prog);
 
 #endif
