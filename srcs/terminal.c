@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 17:12:18 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:05:58 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void	interrogate_terminal(t_prog *prog)
 	prog->me_string = tgetstr("me", &buffer);
 	prog->us_string = tgetstr("us", &buffer);
 	prog->ue_string = tgetstr("ue", &buffer);
+	prog->vi_string = tgetstr("vi", &buffer);
+	prog->ve_string = tgetstr("ve", &buffer);
+
+	tputs(prog->vi_string, 1, ft_putc);
   /* Extract information that termcap functions use.  */
 
 /*

@@ -6,116 +6,60 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 11:39:22 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:23:20 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-/*
-t_select	*new_select(char *str)
+void	set_xy_to_argvl(t_list *lst, int col_num)
 {
-	t_select	*new;
-
-	if (!(new = ft_memalloc(sizeof(t_select))))
-		return (NULL);
-	if (!(new->content = ft_strdup(str)))
-	{
-		ft_memdel(&new);
-		return (NULL);
-	}
-	return (new);
-}
-*/
-
-/*
-static t_select		arg_to_select(char *arg)
-{
-	t_select	select;
-
-	ft_bzero(&select, sizeof(t_select));
-	if (!(select.str = ft_strdup(arg)))
-		err_fatal(ERR_MALLOC, NULL);
-	return (select);
-}
-*/
-
-t_list	*args_to_lst2(char **argv, t_prog *prog)
-{
-	t_select	select;
-	t_list		*ptr;
-	t_list		*new;
+	t_select	*sel;
 	int			x;
 	int			y;
 
 	x = 0;
 	y = 0;
-	ptr = NULL;
-	if (!(prog->argv_l = ft_lstnew(NULL, 0)))
-		err_fatal(ERR_MALLOC, NULL, prog);
-//	if (!(ptr = ft_lstnew(NULL, 0)))
-//		ft_putendl("roro1.2");
-	ptr = prog->argv_l;
-	ft_bzero(&select, sizeof(t_select));
-	select.cursor = 1;
-	while (*argv)
+	while (lst->next)
 	{
-
-		select.p_argv = *argv;
-		select.str = NULL;
-		select.x = x;
-		select.y = y;
-		select.select = 0;
-		if ((ft_strlen(*argv)) > prog->arglen)
-			prog->arglen = ft_strlen(*argv);
-
-		new = ft_lstnew(&select, sizeof(t_select));
-		ptr->next = new;
-		ptr = ptr->next;
-		ptr->next = NULL;
-		argv++;
-		if (x < prog->col_num - 1)
+		lst = lst->next;
+		sel = lst->content;
+		sel->x = x;
+		sel->y = y;
+		if (x < col_num - 1)
 			x++;
 		else
 		{
 			x = 0;
 			y++;
 		}
-		select.cursor = 0;
 	}
-	prog->row_num = y;
-//	return (ptr);
-	return (prog->argv_l);
 }
 
-t_list	*args_to_lst(char **argv, t_prog *prog)
+t_list	*args_to_lst2(char **argv, t_prog *prog)
 {
-//	t_select	select;
-	t_list		*lst;
+	t_select	select;
 	t_list		*ptr;
-//	t_list		*new;
+	t_list		*new;
 
-	if (!(lst = ft_lstnew(NULL, 0)))
+	ptr = NULL;
+	if (!(prog->argv_l = ft_lstnew(NULL, 0)))
 		err_fatal(ERR_MALLOC, NULL, prog);
-	ptr = lst;
-//	ft_bzero(&select, sizeof(t_select));
+	ptr = prog->argv_l;
+	ft_bzero(&select, sizeof(t_select));
+	select.cursor = 1;
 	while (*argv)
 	{
-//		if (!(select.str = ft_strdup(*argv)))
-//		if (!(select.str = *argv))
-//			err_fatal(ERR_MALLOC, NULL, prog);
-//		if (!(new = ft_lstnew(&select, sizeof(t_select))))
-		if (!(ptr->next = ft_lstnew(*argv, sizeof(char) * (ft_strlen(*argv) + 1))))
-			err_fatal(ERR_MALLOC, NULL, prog);
-//		ft_lstadd(&ptr, new);
-		argv++;
+		select.p_argv = *argv;
+		if ((ft_strlen(*argv)) > prog->arglen)
+			prog->arglen = ft_strlen(*argv);
+		new = ft_lstnew(&select, sizeof(t_select));
+		ptr->next = new;
 		ptr = ptr->next;
+		ptr->next = NULL;
+		argv++;
+		select.cursor = 0;
 	}
-
-//	t_select *sel;
-//	ft_printf("TESTI\n\r");
-//	sel = lst->next->content;
-//	ft_printf("TESTI\n\r");
-//	ft_printf("%s\n\r", lst->next->content);
-	return (lst);
+	set_xy_to_argvl(prog->argv_l, prog->col_num);
+	return (prog->argv_l);
 }

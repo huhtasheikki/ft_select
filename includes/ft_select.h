@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 20:18:55 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:23:36 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ struct						s_program
 	char					*me_string;
 	char					*us_string;
 	char					*ue_string;
+	char					*vi_string;
+	char					*ve_string;
 	int						height;
 	int						width;
 	int						auto_wrap;
-//	char					pc;
-//	char					*bc;
-//	char					*up;
 	size_t					arglen;
 	int						col_num;
-	int						row_num;
 	int						cur_x;
 	int						cur_y;
 };
@@ -130,5 +128,6 @@ int							get_last_column_with_row_y(int y, t_list *lst);
 
 t_select					*get_cursor(t_list *lst);
 t_select					*get_xy_select(int x, int y, t_list *select);
+void						set_xy_to_argvl(t_list *lst, int col_num);
 
 #endif

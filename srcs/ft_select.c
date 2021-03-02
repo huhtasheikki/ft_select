@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 20:09:10 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/01 21:07:10 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	disable_raw_mode(t_prog *prog)
 {
 	t_termios	orig_termios;
 
+	tputs(prog->ve_string, 1, ft_putc);
+	move_cursor(0, 0, prog);
+	terminal_clear_row(prog);
+	move_cursor(0, 0, prog);
 	orig_termios = prog->orig_termios;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
 		exit(1);
