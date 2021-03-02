@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 09:58:31 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 13:41:51 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int		main(int argc, char **argv)
 	t_prog		prog;
 //	t_list		*select;
 	char		c;
+	char		readarr[10];
 
 	if (argc < 2)
 		exit(ft_printf("USAGE HOMMAT\n"));
@@ -184,15 +185,47 @@ int		main(int argc, char **argv)
 
 	while (1)
 	{
+		ft_bzero(readarr, 10);
 		c = '\0';
-		if (read(STDIN_FILENO, &c, 1) == -1)
+//		if (read(STDIN_FILENO, &c, 1) == -1)
+		if (read(STDIN_FILENO, readarr, 10) == -1)
 			err_fatal(ERR_READ, NULL, &prog);
+		react_to_keypress(readarr, &prog);
 
 		if (ft_iscntrl(c))
 			ft_printf("%d\r\n", c);
 		else if (c)
 			ft_printf("%d ('%c')\r\n", c, c);
 
+
+
+		if (readarr[0] == 27)
+		{
+			ft_putnbr_fd(readarr[0], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[1], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[2], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[3], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[4], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[5], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[6], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[7], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[8], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putnbr_fd(readarr[9], STDOUT_FILENO);
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		}
+
+
+/*
+		c = readarr[0];
 		if (c == 'q')
 			break;
 		if (c == 'l')
@@ -213,6 +246,7 @@ int		main(int argc, char **argv)
 			fun_select_cursor(&prog);
 		if (c == 127)
 			remove_elem(&prog);
+*/
 	}
 
 	disable_raw_mode(&prog);

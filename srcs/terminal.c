@@ -6,18 +6,18 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 10:27:46 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 11:32:07 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-/*
+
 char		PC;
 char		*BC;
 char		*UP;
 short ospeed;
-*/
+
 
 int ft_putc(int c)
 {
@@ -55,7 +55,7 @@ void	move_cursor(int x, int y, t_prog *prog)
 void	interrogate_terminal(t_prog *prog)
 {
 	char	*buffer;
-//	char	*temp;
+	char	*temp;
 
 //	if (!(buffer = ft_memalloc(sizeof(char) * ft_strlen(prog->term_buffer))))
 //	if (!(buffer = ft_memalloc(sizeof(char) * ft_strlen(prog->termtype))))
@@ -82,12 +82,11 @@ void	interrogate_terminal(t_prog *prog)
 	tputs(prog->vi_string, 1, ft_putc);
   /* Extract information that termcap functions use.  */
 
-/*
-	temp = tgetstr ("pc", &buffer);
+	temp = tgetstr ("pc", 0);
 	PC = temp ? *temp : 0;
-	BC = tgetstr ("le", &buffer);
-	UP = tgetstr ("up", &buffer);
-*/
+	BC = tgetstr ("le", 0);
+	UP = tgetstr ("up", 0);
+
 }
 
 void	init_terminal_data(t_prog *prog)

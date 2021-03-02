@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 10:32:43 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 13:35:44 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_select					*get_xy_select(int x, int y, t_list *select);
 void						set_xy_to_argvl(t_list *lst, int col_num);
 void						remove_elem(t_prog *prog);
 
+void						react_to_keypress(char *readarr, t_prog *prog);
 void						quit_no_return(t_prog *prog);
 
 #endif
