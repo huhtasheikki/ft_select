@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:17:08 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 13:46:35 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:49:10 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ void	react_to_keypress(char *readarr, t_prog *prog)
 			fun_select_cursor(prog);
 		else if (readarr[0] == 127)
 			remove_elem(prog);
+		else if (readarr[0] == 13) // enter newline
+			quit_return_selected(prog); // tahan jotain;
 	}
 }

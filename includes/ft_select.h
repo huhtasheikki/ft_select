@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 13:35:44 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:49:31 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,12 @@ struct						s_program
 	char					*ue_string;
 	char					*vi_string;
 	char					*ve_string;
+	char					*ti_string;
+	char					*te_string;
 	int						height;
 	int						width;
-	int						auto_wrap;
 	size_t					arglen;
 	int						col_num;
-	int						cur_x;
-	int						cur_y;
 };
 
 typedef struct s_select		t_select;
@@ -128,5 +127,6 @@ void						remove_elem(t_prog *prog);
 
 void						react_to_keypress(char *readarr, t_prog *prog);
 void						quit_no_return(t_prog *prog);
+void						quit_return_selected(t_prog *prog);
 
 #endif
