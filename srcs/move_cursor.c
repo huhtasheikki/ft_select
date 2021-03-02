@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:51:58 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/01 19:59:51 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:27:17 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,71 +76,4 @@ void	fun_select_cursor(t_prog *prog)
 		current->select = 1;
 	fun_move_cursor_next(prog);
 	print_args(prog);
-}
-
-/*
-** BELOW THIS POINT ARE NOT NEEDED ANYMORE
-*/
-
-void	move_cursor_up(t_prog *prog)
-{
-	t_select	*current;
-	t_select	*next;
-	int			x;
-	int			y;
-
-	if (!(current = get_cursor(prog->argv_l)))
-		return ;
-	x = current->x;
-	y = current->y - 1;
-	if (!(next = get_xy_select(x, y, prog->argv_l)))
-		return ;
-	current->cursor = 0;
-	next->cursor = 1;
-	move_cursor(0, 0, prog);
-	terminal_clear_row(prog);
-	print_lst(prog->argv_l, prog);
-}
-
-void	move_cursor_down(t_prog *prog)
-{
-	t_select	*current;
-	t_select	*next;
-	int			x;
-	int			y;
-
-	if (!(current = get_cursor(prog->argv_l)))
-		return ;
-	x = current->x;
-	y = current->y + 1;
-	if (!(next = get_xy_select(x, y, prog->argv_l)))
-		return ;
-	current->cursor = 0;
-	next->cursor = 1;
-	move_cursor(0, 0, prog);
-	terminal_clear_row(prog);
-	print_lst(prog->argv_l, prog);
-//	if (prog->cur_y < prog->height - 1)
-//		prog->cur_y++;
-//	move_cursor(prog);
-}
-
-void	move_cursor_left(t_prog *prog)
-{
-	fun_move_cursor(MOVE_LEFT, 0, prog);
-/*
-	if (prog->cur_x != 0)
-		prog->cur_x--;
-	move_cursor(0, 0, prog);
-*/
-}
-
-void	move_cursor_right(t_prog *prog)
-{
-	fun_move_cursor(MOVE_RIGHT, 0, prog);
-/*
-	if (prog->cur_x < prog->width - 1)
-		prog->cur_x++;
-	move_cursor(0, 0, prog);
-*/
 }

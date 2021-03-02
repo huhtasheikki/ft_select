@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 09:23:36 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/02 09:27:44 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,6 @@ void						sig_ttysize(int signo);
 void						terminal_clear(t_prog *prog);
 void						terminal_clear_row(t_prog *prog);
 void						move_cursor(int x, int y, t_prog *prog);
-void						move_cursor_up(t_prog *prog);
-void						move_cursor_down(t_prog *prog);
-void						move_cursor_left(t_prog *prog);
-void						move_cursor_right(t_prog *prog);
 
 int							ft_putc(int c);
 void						print_args(t_prog *prog);
