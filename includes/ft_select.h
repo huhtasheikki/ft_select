@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 17:49:31 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:33:32 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <termios.h>
 # include <unistd.h>
 # include <sys/ioctl.h>
+# include <fcntl.h>
 
 # define ERR_MALLOC 1
 # define ERR_READ 2
@@ -33,13 +34,8 @@
 # define MOVE_LEFT -1
 # define MOVE_RIGHT 1
 
-/*
-extern char					PC;
-extern char					*UP;
-extern char					*BC;
-extern short				ospeed;
-*/
-
+# define KEY_CTRL_Z 26
+# define KEY_ESC 27
 
 struct						s_select
 {
@@ -54,6 +50,7 @@ typedef struct termios		t_termios;
 
 struct						s_program
 {
+	int						fd;
 	t_termios				orig_termios;
 	t_list					*argv_l;
 	char					*term_buffer;
@@ -94,21 +91,20 @@ void						err_quit(int error_no, char *s_str);
 ** INIT STUFF
 */
 
-t_list						*args_to_lst(char **argv, t_prog *prog);
 t_list						*args_to_lst2(char **argv, t_prog *prog);
 void						print_lst(t_list *elem, t_prog *prog);
 
-void						disable_raw_mode(t_prog *prog);
+void						enable_raw_mode(t_prog *prog);
+int							disable_raw_mode(t_prog *prog);
 
 void						init_terminal_data(t_prog *prog);
 void						interrogate_terminal(t_prog *prog);
 
-void						sig_ttysize(int signo);
+void						signals(void);
 
 /*
 ** TERMCAPS COMMANDS
 */
-void						terminal_clear(t_prog *prog);
 void						terminal_clear_row(t_prog *prog);
 void						move_cursor(int x, int y, t_prog *prog);
 

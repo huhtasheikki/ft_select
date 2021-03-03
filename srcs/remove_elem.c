@@ -6,19 +6,19 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 09:30:37 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 10:35:26 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:34:39 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void		del_argvl_elem(void *elem, size_t size)
+static void		del_argvl_elem(void *elem, size_t size)
 {
 	ft_bzero(elem, size);
 	free(elem);
 }
 
-void		set_lst_cursor(t_list *lst)
+static void		set_lst_cursor(t_list *lst)
 {
 	t_select	*select;
 
@@ -28,7 +28,7 @@ void		set_lst_cursor(t_list *lst)
 	select->cursor = 1;
 }
 
-t_list		*get_cursor_lst(t_list *lst)
+static t_list	*get_cursor_lst(t_list *lst)
 {
 	t_select	*current;
 
@@ -42,7 +42,7 @@ t_list		*get_cursor_lst(t_list *lst)
 	return (NULL);
 }
 
-void	remove_elem(t_prog *prog)
+void			remove_elem(t_prog *prog)
 {
 	t_list		*current;
 	t_list		*prev;

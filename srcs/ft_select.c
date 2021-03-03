@@ -6,20 +6,13 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 17:39:39 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:28:06 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		ft_iscntrl(int c)
-{
-	if ((c > 0 && c < 32) || c == 127)
-		return (1);
-	return (0);
-}
-
-void	disable_raw_mode(t_prog *prog)
+int		disable_raw_mode(t_prog *prog)
 {
 	t_termios	orig_termios;
 
@@ -30,8 +23,8 @@ void	disable_raw_mode(t_prog *prog)
 	tputs(prog->te_string, 1, ft_putc);
 	orig_termios = prog->orig_termios;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
-		exit(1);
-//		err_fatal(ERR_MESSAGE, "tcsetattr", prog);
+		err_quit(ERR_MESSAGE, "tcsetattr");
+	return (1);
 }
 
 void	ft_cfmakeraw(t_termios *termios_p)
@@ -39,7 +32,7 @@ void	ft_cfmakeraw(t_termios *termios_p)
 	termios_p->c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP \
 							| INLCR | IGNCR | ICRNL | IXON);
 	termios_p->c_oflag &= ~OPOST;
-	termios_p->c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	termios_p->c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
 	termios_p->c_cflag &= ~(CSIZE | PARENB);
 	termios_p->c_cflag |= CS8;
 }
@@ -53,7 +46,7 @@ void	ft_cfmakeraw(t_termios *termios_p)
 **            flag, as well as ICANON must be enabled for the special
 **            characters EOL2, LNEXT, REPRINT, WERASE to be interpreted,
 **            and for the IUCLC flag to be effective.
-** - ISIG     Disable signal (normal: When any of the characters INTR, QUIT,
+** - (ISIG)   Disable signal (normal: When any of the characters INTR, QUIT,
 **            SUSP, or DSUSP are received,  generate the corresponding signal).
 ** - OPOST    Enable implementation-defined output processing.
 ** - IGNBRK   Ignore BREAK condition on input.
@@ -80,7 +73,6 @@ void	ft_cfmakeraw(t_termios *termios_p)
 **            If neither IGNPAR nor PARMRK is set, read a character with
 **            a parity error or framing error as \0.
 ** - ISTRIP   Strip off eighth bit.
-
 */
 
 void	enable_raw_mode(t_prog *prog)
@@ -95,11 +87,13 @@ void	enable_raw_mode(t_prog *prog)
 	raw.c_cc[VTIME] = 1;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
 		err_fatal(ERR_MESSAGE, "tcsetattr", prog);
+	tputs(prog->ti_string, 1, ft_putc);
+	tputs(prog->vi_string, 1, ft_putc);
 }
 
 void	print_lst(t_list *elem, t_prog *prog)
 {
-	int		i;
+	int			i;
 	t_select	*sel;
 
 	i = 0;
@@ -112,17 +106,17 @@ void	print_lst(t_list *elem, t_prog *prog)
 			tputs(prog->mr_string, 1, ft_putc);
 		if (sel->cursor)
 			tputs(prog->us_string, 1, ft_putc);
-		ft_printf("%-*s", prog->arglen, sel->p_argv);
+		ft_printf_fd(prog->fd, "%-*s", prog->arglen, sel->p_argv);
 		tputs(prog->me_string, 1, ft_putc);
 		if (i == prog->col_num)
 		{
 			i = 0;
-			ft_printf("\r\n");
+			ft_printf_fd(prog->fd, "\r\n");
 		}
 		else
-			ft_putchar_fd(' ', STDOUT_FILENO);
+			ft_putchar_fd(' ', prog->fd);
 	}
-	ft_printf("\r\n");
+	ft_printf_fd(prog->fd, "\r\n");
 }
 
 int		get_longest_len(char **argv)
@@ -144,112 +138,27 @@ int		get_longest_len(char **argv)
 int		main(int argc, char **argv)
 {
 	t_prog		prog;
-//	t_list		*select;
 	char		c;
 	char		readarr[10];
 
 	if (argc < 2)
 		exit(ft_printf("USAGE HOMMAT\n"));
-
-	if (signal(SIGWINCH, sig_ttysize) == SIG_ERR)
-		err_fatal(ERR_SIG, NULL, NULL);
-	ft_bzero(&prog, sizeof(t_prog));
-	g_prog = &prog;
-//	prog.term_buffer = ft_memalloc(sizeof(char) * 2048);
-
+	signals();
 	init_terminal_data(&prog);
 	interrogate_terminal(&prog);
 	prog.arglen = get_longest_len(argv + 1);
 	prog.col_num = prog.width / (prog.arglen + 1);
 	args_to_lst2(argv + 1, &prog);
 	enable_raw_mode(&prog);
-//	select = args_to_lst(argv + 1, &prog);
-	terminal_clear(&prog);
-
-//	ft_printf("kolumnien maara:%d, koko:%d\r\n", prog.col_num, prog.arglen);
-
 	print_lst(prog.argv_l, &prog);
-
-//	ft_printf("height:%d widht:%d autowrap:%d \n\r", prog.height, prog.width, prog.auto_wrap);
-
-/*
-	int i;
-    ft_printf("The ASCII value of all control characters are ");
-    for (i=0; i<=127; ++i)
-    {
-        if (ft_iscntrl(i) != 0)
-            ft_printf("%d ", i);
-    }
-	ft_putchar('\n');
-	ft_putchar('\r');
-*/
-
 	while (1)
 	{
 		ft_bzero(readarr, 10);
 		c = '\0';
-//		if (read(STDIN_FILENO, &c, 1) == -1)
 		if (read(STDIN_FILENO, readarr, 10) == -1)
 			err_fatal(ERR_READ, NULL, &prog);
 		react_to_keypress(readarr, &prog);
-
-		if (ft_iscntrl(c))
-			ft_printf("%d\r\n", c);
-		else if (c)
-			ft_printf("%d ('%c')\r\n", c, c);
-
-
-
-		if (readarr[0] == 27)
-		{
-			ft_putnbr_fd(readarr[0], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[1], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[2], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[3], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[4], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[5], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[6], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[7], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[8], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-			ft_putnbr_fd(readarr[9], STDOUT_FILENO);
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		}
-
-
-/*
-		c = readarr[0];
-		if (c == 'q')
-			break;
-		if (c == 'l')
-			terminal_clear_row(&prog);
-		if (c == 'w')
-			fun_move_cursor(0, MOVE_UP, &prog);
-//			move_cursor_up(&prog);
-		if (c == 's')
-			fun_move_cursor(0, MOVE_DOWN, &prog);
-//			move_cursor_down(&prog);
-		if (c == 'a')
-			fun_move_cursor(MOVE_LEFT, 0, &prog);
-//			move_cursor_left(&prog);
-		if (c == 'd')
-			fun_move_cursor(MOVE_RIGHT, 0, &prog);
-//			move_cursor_right(&prog);
-		if (c == ' ')
-			fun_select_cursor(&prog);
-		if (c == 127)
-			remove_elem(&prog);
-*/
 	}
-
 	disable_raw_mode(&prog);
 	return (0);
 }

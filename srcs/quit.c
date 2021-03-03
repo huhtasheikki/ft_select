@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 10:31:14 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/02 17:50:31 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:32:01 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	quit_return_selected(t_prog *prog)
 		ptr = ptr->next;
 		sel = ptr->content;
 		if (sel->select)
-			ft_printf_fd(1, "%s ", sel->p_argv);
+			ft_printf_fd(STDOUT_FILENO, "%s ", sel->p_argv);
 	}
-	ft_putchar('\n');
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	exit(1);
 }
