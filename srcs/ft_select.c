@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 20:28:06 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 22:21:26 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,22 +117,6 @@ void	print_lst(t_list *elem, t_prog *prog)
 			ft_putchar_fd(' ', prog->fd);
 	}
 	ft_printf_fd(prog->fd, "\r\n");
-}
-
-int		get_longest_len(char **argv)
-{
-	int		len;
-	int		temp;
-
-	len = 0;
-	while (*argv)
-	{
-		temp = ft_strlen(*argv);
-		if (temp > len)
-			len = temp;
-		argv++;
-	}
-	return (len);
 }
 
 int		main(int argc, char **argv)

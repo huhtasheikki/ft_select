@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 20:33:32 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 22:25:13 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void						err_quit(int error_no, char *s_str);
 
 t_list						*args_to_lst2(char **argv, t_prog *prog);
 void						print_lst(t_list *elem, t_prog *prog);
+void						print_args(t_prog *prog);
 
 void						enable_raw_mode(t_prog *prog);
 int							disable_raw_mode(t_prog *prog);
@@ -109,7 +110,6 @@ void						terminal_clear_row(t_prog *prog);
 void						move_cursor(int x, int y, t_prog *prog);
 
 int							ft_putc(int c);
-void						print_args(t_prog *prog);
 void						fun_move_cursor(int x, int y, t_prog *prog);
 void						fun_move_cursor_next(t_prog *prog);
 void						fun_select_cursor(t_prog *prog);
@@ -124,5 +124,7 @@ void						remove_elem(t_prog *prog);
 void						react_to_keypress(char *readarr, t_prog *prog);
 void						quit_no_return(t_prog *prog);
 void						quit_return_selected(t_prog *prog);
+
+int							get_longest_len(char **argv);
 
 #endif

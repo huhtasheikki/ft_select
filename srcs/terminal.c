@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 20:35:41 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 22:25:34 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ int		ft_putc(int c)
 void	terminal_clear_row(t_prog *prog)
 {
 	tputs(prog->cd_string, 1, ft_putc);
-}
-
-void	print_args(t_prog *prog)
-{
-	if (!prog->argv_l->next)
-	{
-		disable_raw_mode(prog);
-		exit(1);
-	}
-	move_cursor(0, 0, prog);
-	terminal_clear_row(prog);
-	print_lst(prog->argv_l, prog);
 }
 
 void	move_cursor(int x, int y, t_prog *prog)
