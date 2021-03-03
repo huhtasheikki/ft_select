@@ -6,7 +6,7 @@
 /*   By: hhuhtane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:10:51 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/02/10 00:00:55 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/03 20:22:22 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					get_next_line(const int fd, char **line);
 int					ft_abs(int a);
 int					get_nbr(char c);
+int					ft_iscntrl(int c);
 
 char				*ft_strdup(const char *s1);
 char				*ft_strcpy(char *dst, const char *src);
