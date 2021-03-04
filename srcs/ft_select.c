@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/04 18:09:14 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 19:01:04 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		main(int argc, char **argv)
 	char		readarr[10];
 
 	if (argc < 2)
-		exit(ft_printf("USAGE HOMMAT\n"));
+		exit(ft_printf("Usage: ./ft_select [args]*\n"));
 	signals();
 	init_terminal_data(&prog);
 	interrogate_terminal(&prog);
