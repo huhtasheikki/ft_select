@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 18:26:35 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 20:04:51 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 20:14:14 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void			signals(void)
 		(signal(SIGALRM, sig_handler) == SIG_ERR) || \
 		(signal(SIGXCPU, sig_handler) == SIG_ERR) || \
 		(signal(SIGXFSZ, sig_handler) == SIG_ERR) || \
+		(signal(SIGABRT, sig_handler) == SIG_ERR) || \
 		(signal(SIGVTALRM, sig_handler) == SIG_ERR) || \
 		(signal(SIGPROF, sig_handler) == SIG_ERR))
 		err_fatal(ERR_SIG, NULL, NULL);
