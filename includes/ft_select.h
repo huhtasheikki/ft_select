@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/04 13:09:04 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 18:08:56 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # define ERR_MALLOC 1
 # define ERR_READ 2

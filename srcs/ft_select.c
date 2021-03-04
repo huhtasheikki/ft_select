@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 22:21:26 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 18:09:14 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	print_lst(t_list *elem, t_prog *prog)
 int		main(int argc, char **argv)
 {
 	t_prog		prog;
-	char		c;
 	char		readarr[10];
 
 	if (argc < 2)
@@ -138,7 +137,6 @@ int		main(int argc, char **argv)
 	while (1)
 	{
 		ft_bzero(readarr, 10);
-		c = '\0';
 		if (read(STDIN_FILENO, readarr, 10) == -1)
 			err_fatal(ERR_READ, NULL, &prog);
 		react_to_keypress(readarr, &prog);
