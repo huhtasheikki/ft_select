@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/04 19:01:04 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 19:50:33 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		main(int argc, char **argv)
 	prog.col_num = prog.width / (prog.arglen + 1);
 	args_to_lst2(argv + 1, &prog);
 	enable_raw_mode(&prog);
-	print_lst(prog.argv_l, &prog);
+	print_args(&prog);
 	while (1)
 	{
 		ft_bzero(readarr, 10);
