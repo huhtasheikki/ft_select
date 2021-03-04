@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 15:18:25 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 22:25:13 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 13:09:04 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,50 +81,64 @@ typedef struct s_program	t_prog;
 /*
 ** GLOBALS:
 */
+
 t_prog						*g_prog;
+
+/*
+** PROTOTYPES:
+***************
+** ERRORS:
+*/
 
 void						err_fatal(int error_no, char *s_str, t_prog *prog);
 void						err_quit(int error_no, char *s_str);
 
+/*
+** RAW MODE:
+*/
+
+void						enable_raw_mode(t_prog *prog);
+int							disable_raw_mode(t_prog *prog);
 
 /*
 ** INIT STUFF
 */
 
 t_list						*args_to_lst2(char **argv, t_prog *prog);
-void						print_lst(t_list *elem, t_prog *prog);
-void						print_args(t_prog *prog);
-
-void						enable_raw_mode(t_prog *prog);
-int							disable_raw_mode(t_prog *prog);
-
 void						init_terminal_data(t_prog *prog);
 void						interrogate_terminal(t_prog *prog);
-
 void						signals(void);
+int							get_last_row_with_column_x(int x, t_list *lst);
+int							get_last_column_with_row_y(int y, t_list *lst);
+
+/*
+** PRINTING FUNCTIONS:
+*/
+
+void						print_lst(t_list *elem, t_prog *prog);
+void						print_args(t_prog *prog);
 
 /*
 ** TERMCAPS COMMANDS
 */
 void						terminal_clear_row(t_prog *prog);
 void						move_cursor(int x, int y, t_prog *prog);
-
 int							ft_putc(int c);
 void						fun_move_cursor(int x, int y, t_prog *prog);
 void						fun_move_cursor_next(t_prog *prog);
 void						fun_select_cursor(t_prog *prog);
-int							get_last_row_with_column_x(int x, t_list *lst);
-int							get_last_column_with_row_y(int y, t_list *lst);
+
+/*
+** OTHER UTILS:
+*/
 
 t_select					*get_cursor(t_list *lst);
 t_select					*get_xy_select(int x, int y, t_list *select);
 void						set_xy_to_argvl(t_list *lst, int col_num);
 void						remove_elem(t_prog *prog);
-
 void						react_to_keypress(char *readarr, t_prog *prog);
 void						quit_no_return(t_prog *prog);
 void						quit_return_selected(t_prog *prog);
-
 int							get_longest_len(char **argv);
 
 #endif
