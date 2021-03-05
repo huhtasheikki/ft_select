@@ -6,7 +6,7 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 09:27:11 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/04 19:50:33 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/04 20:43:11 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	enable_raw_mode(t_prog *prog)
 		err_fatal(ERR_MESSAGE, "tcgetattr", prog);
 	prog->orig_termios = raw;
 	ft_cfmakeraw(&raw);
-	raw.c_cc[VMIN] = 0;
+	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 1;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
 		err_fatal(ERR_MESSAGE, "tcsetattr", prog);

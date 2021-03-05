@@ -6,19 +6,11 @@
 /*   By: hhuhtane <hhuhtane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 11:26:38 by hhuhtane          #+#    #+#             */
-/*   Updated: 2021/03/03 22:25:34 by hhuhtane         ###   ########.fr       */
+/*   Updated: 2021/03/05 10:55:44 by hhuhtane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-/*
-** THSES GLOBALS WERE MENTIONED, BUT NOT DEFINED. I DIDN'T USE THEN.
-** char		PC;
-** char		*BC;
-** char		*UP;
-** short 	ospeed;
-*/
 
 int		ft_putc(int c)
 {
